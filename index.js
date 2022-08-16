@@ -23,8 +23,8 @@ config();
         app.use(express.json())   //parse req.body to json
 
         //routes
+        app.get("/", (_, res) => res.send("Welcome to Anacabs"));
         app.use("/api/auth", auth)
-        app.get("/", (_, res) => res.send("Welcome to Anacab"));
         app.post("/api/bookings", async (req, res) => {
             try {
                 await mongo.bookings.insertOne({ ...req.body, did: "", status: "pending" })
