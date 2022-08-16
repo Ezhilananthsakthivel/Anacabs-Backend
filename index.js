@@ -11,6 +11,7 @@ const Tokenauth = require("./middleware")
 
 
 //server connection
+const port = process.env.port || 3001
 const app = express();
 config();
 
@@ -23,7 +24,7 @@ config();
         app.use(express.json())   //parse req.body to json
 
         //routes
-        //app.get("/", (_, res) => res.send("Welcome to Anacabs"));
+        app.get("/", (_, res) => res.send("Welcome to Anacab"));
         app.use("/api/auth", auth)
         app.post("/api/bookings", async (req, res) => {
             try {
@@ -38,7 +39,7 @@ config();
         app.use("/api/bookings", bookings);
         app.use("/api/drivers", drivers)
 
-        app.listen(process.env.port, () => console.log("Port-", process.env.port))
+        app.listen(port, () => console.log("Port-", port))
     } catch (err) {
         console.log(err.message)
         //process.exit()
