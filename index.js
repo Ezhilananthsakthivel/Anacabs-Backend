@@ -11,7 +11,7 @@ const Tokenauth = require("./middleware")
 
 
 //server connection
-const port = process.env.port || 3001
+const PORT = process.env.PORT || 3001
 const app = express();
 config();
 
@@ -39,7 +39,7 @@ config();
         app.use("/api/bookings", bookings);
         app.use("/api/drivers", drivers)
 
-        app.listen(port, () => console.log("Port-", port))
+        app.listen(PORT, () => console.log("Port-", PORT))
     } catch (err) {
         console.log(err.message)
         //process.exit()
