@@ -23,7 +23,7 @@ config();
         app.use(express.json())   //parse req.body to json
 
         //routes
-        app.get("/", (_, res) => res.send("Welcome to Anacabs"));
+        //app.get("/", (_, res) => res.send("Welcome to Anacabs"));
         app.use("/api/auth", auth)
         app.post("/api/bookings", async (req, res) => {
             try {
