@@ -7,8 +7,9 @@ const admin = require("./routers/admin.route");
 const auth = require("./routers/auth.route");
 const bookings = require("./routers/bookings.route");
 const drivers = require("./routers/drivers.route");
-const Tokenauth = require("./middleware")
+const users = require("./routers/users.route")
 
+const Tokenauth = require("./middleware")
 
 //server connection
 const PORT = process.env.PORT || 3001
@@ -26,18 +27,11 @@ config();
         //routes
         app.get("/", (_, res) => res.send("Welcome to Anacab"));
         app.use("/api/auth", auth)
-        app.post("/api/bookings", async (req, res) => {
-            try {
-                await mongo.bookings.insertOne({ ...req.body, did: "", status: "pending" })
-                res.send("Booked")
-            } catch (err) {
-                res.status(500)
-            }
-        });
         app.use(Tokenauth)
         app.use("/api/admin", admin);
         app.use("/api/bookings", bookings);
         app.use("/api/drivers", drivers)
+        app.use("/api/users", users)
 
         app.listen(PORT, () => console.log("Port-", PORT))
     } catch (err) {
