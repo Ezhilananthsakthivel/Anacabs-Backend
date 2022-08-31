@@ -74,6 +74,8 @@ router.post("/otp", async (req, res) => {
 })
 router.post("/", async (req, res) => {
     try {
+        const booking = await helper.validate(req.body)
+        delete req.body.otp
         const data = await helper.create(req)
         res.send("Booked")
     } catch (err) {

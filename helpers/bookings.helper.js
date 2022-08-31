@@ -1,7 +1,24 @@
 const { ObjectId } = require("mongodb")
 const db = require("../mongodb")
+const Joi = require("joi")
+
+const bookingsSchema = Joi.object({
+    from: Joi.string().required(),
+    to: Joi.string().required(),
+    date: Joi.string().required(),
+    time: Joi.string().required(),
+    pnumber: Joi.string().length(10).pattern(/^[0-9]+$/).required(),
+    otp: Joi.number().required(),
+})
 
 const helper = {
+    validate(booking) {
+        try {
+            return bookingsSchema.validateAsync(booking);
+        } catch ({ details: [{ message }] }) {
+            throw new Error(message);
+        }
+    },
     find() {
         return db.bookings.find().sort({ status: -1, time: -1, date: -1 }).toArray()
     },

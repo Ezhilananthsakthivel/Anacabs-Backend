@@ -7,7 +7,6 @@ async function Tokenauth(req, res, next) {
         if (req.headers && req.headers.authorization) {
             const [_, token] = req.headers.authorization.split(" ");
             const user = await jwt.verify(token, process.env.JWTpassword);
-            console.log(user)
             if (user.role === "admin") {
                 const admin = await authHelper.findAdminuname(user.uname)
                 if (admin) {
