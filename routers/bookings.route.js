@@ -1,6 +1,6 @@
 const router = require("express").Router()
 //const otpGenerator = require('otp-generator')
-const fast2sms = require('fast-two-sms')
+//const fast2sms = require('fast-two-sms')
 const helper = require("../helpers/bookings.helper")
 
 
@@ -75,7 +75,6 @@ router.post("/userorders", async (req, res) => {
 router.post("/", async (req, res) => {
     try {
         const booking = await helper.validate(req.body)
-        delete req.body.otp
         const data = await helper.create(req)
         res.send("Booked")
     } catch (err) {
