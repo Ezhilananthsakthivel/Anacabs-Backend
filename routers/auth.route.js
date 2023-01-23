@@ -38,7 +38,7 @@ router.post("/register", async (req, res) => {
 router.post("/dlogin", async (req, res) => {
     try {
         // Data Validation
-        const driver = await helper.validateLogin(req.body);
+        const driver = await helper.dvalidateLogin(req.body);
         // User Exists Validation
         const dbdriver = await helper.findDriveruname(driver.uname);
         if (!dbdriver)

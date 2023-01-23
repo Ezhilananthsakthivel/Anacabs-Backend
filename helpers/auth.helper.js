@@ -14,6 +14,11 @@ const loginSchema = Joi.object({
     password: Joi.string().min(4).max(15).required()
 });
 
+const dloginSchema = Joi.object({
+    uname: Joi.string().required(),
+    password: Joi.string().min(4).max(15).required()
+});
+
 const helper = {
     validateRegister(user) {
         try {
@@ -25,6 +30,13 @@ const helper = {
     validateLogin(user) {
         try {
             return loginSchema.validateAsync(user);
+        } catch ({ details: [{ message }] }) {
+            throw new Error(message);
+        }
+    },
+    dvalidateLogin(user) {
+        try {
+            return dloginSchema.validateAsync(user);
         } catch ({ details: [{ message }] }) {
             throw new Error(message);
         }
