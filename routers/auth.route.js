@@ -103,7 +103,7 @@ router.post("/login", async (req, res) => {
 
         //Token
         if (!dbuser.verified) {
-            const token = helper.findToken(dbuser.email)
+            const token = await helper.findToken(dbuser.email)
             const url = `${process.env.BASE_URL}/${dbuser._id}/verify/${token.token}`
             await sendMail(dbuser.email, "Verify your mail", url)
             return res.status(400).send({ error: "An Email send to your account please verify" })
