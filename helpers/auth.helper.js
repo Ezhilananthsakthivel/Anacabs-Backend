@@ -3,14 +3,14 @@ const Joi = require("joi")
 
 const registerSchema = Joi.object({
     fname: Joi.string().min(4).max(20).required(),
-    uname: Joi.string().min(4).max(15).required(),
+    email: Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }).required(),
     pnumber: Joi.string().length(10).pattern(/^[0-9]+$/).required(),
     password: Joi.string().min(4).max(15).required(),
     cpassword: Joi.ref("password")
 });
 
 const loginSchema = Joi.object({
-    uname: Joi.string().min(4).max(15).required(),
+    email: Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }),
     password: Joi.string().min(4).max(15).required()
 });
 
@@ -35,11 +35,14 @@ const helper = {
     findAdminuname(uname) {
         return db.admin.findOne({ uname, active: true });
     },
-    findUseruname(uname){
-        return db.users.findOne({ uname, active: true });
+    findUserEmail(email) {
+        return db.users.findOne({ email, active: true });
     },
     createuser(user) {
         return db.users.insertOne(user);
+    },
+    findToken(email) {
+        return db.tokens.findOne({ email, type: "registration" })
     }
 }
 

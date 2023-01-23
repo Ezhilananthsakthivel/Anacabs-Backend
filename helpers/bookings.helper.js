@@ -7,7 +7,8 @@ const bookingsSchema = Joi.object({
     to: Joi.string().required(),
     date: Joi.string().required(),
     time: Joi.string().required(),
-    pnumber: Joi.string().length(10).pattern(/^[0-9]+$/).required()
+    pnumber: Joi.string().length(10).pattern(/^[0-9]+$/).required(),
+    otp: Joi.number().required(),
 })
 
 const helper = {

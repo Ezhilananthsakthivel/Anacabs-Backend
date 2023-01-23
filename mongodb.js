@@ -5,7 +5,8 @@ const mongo = {
     admin: null,
     bookings: null,
     drivers: null,
-    users:null,
+    users: null,
+    tokens: null,
     async connect() {
         const client = new MongoClient(process.env.DB_URL);
         await client.connect();
@@ -14,7 +15,8 @@ const mongo = {
         this.admin = this.db.collection("admin");
         this.bookings = this.db.collection("bookings");
         this.drivers = this.db.collection("drivers");
-        this.users=this.db.collection("users")
+        this.users = this.db.collection("users")
+        this.tokens = this.db.collection("tokens")
     }
 }
 

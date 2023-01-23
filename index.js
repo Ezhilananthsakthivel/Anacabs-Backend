@@ -27,11 +27,11 @@ config();
         //routes
         app.get("/", (_, res) => res.send("Welcome to Anacab"));
         app.use("/api/auth", auth)
-        app.use(Tokenauth)
-        app.use("/api/admin", admin);
-        app.use("/api/bookings", bookings);
-        app.use("/api/drivers", drivers)
-        app.use("/api/users", users)
+        //app.use(Tokenauth)
+        app.use("/api/admin", Tokenauth, admin);
+        app.use("/api/bookings", Tokenauth, bookings);
+        app.use("/api/drivers", Tokenauth, drivers)
+        app.use("/api/users", Tokenauth, users)
 
         app.listen(PORT, () => console.log("Port-", PORT))
     } catch (err) {

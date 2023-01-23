@@ -59,22 +59,18 @@ router.post("/userorders", async (req, res) => {
         res.status(500).send(err.message)
     }
 })
-// router.post("/otp", async (req, res) => {
-//     req.otp = null
-//     try {
-//         const otp = otpGenerator.generate(6, { numbers: true, upperCaseAlphabets: false, lowerCaseAlphabets: false, specialChars: false });
-//         //const options = { authorization: process.env.OTP_API_KEY, message: otp, numbers: [req.body.pnumber] }
-//         const data = await fast2sms.sendMessage({ authorization: process.env.OTP_API_KEY, message: otp, numbers: [req.body.pnumber] })
-//         req.otp = otp
-//         console.log(req.body.pnumber, req.otp, data)
-//         res.send(data)
-//     } catch (err) {
-//         res.send(err.message)
-//     }
-// })
+router.post("/otp", async (req, res) => {
+    req.otp = null
+    try {
+        const otp = Math.floor(Math.random() * 100000 + 1)
+    } catch (err) {
+        res.send(err.message)
+    }
+})
 router.post("/", async (req, res) => {
     try {
         const booking = await helper.validate(req.body)
+        delete req.body.otp
         const data = await helper.create(req)
         res.send("Booked")
     } catch (err) {

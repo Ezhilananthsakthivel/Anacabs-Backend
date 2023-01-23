@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 const authHelper = require("./helpers/auth.helper")
 
-async function Tokenauth(req, res, next) {
+async function Tokenauth(req, res, sakthi) {
     req.user = null
     try {
         if (req.headers && req.headers.authorization) {
@@ -12,7 +12,7 @@ async function Tokenauth(req, res, next) {
                 if (admin) {
                     //console.log("admin")
                     req.user = user
-                    next();
+                    sakthi();
                 }
             }
             else if (user.role === "driver") {
@@ -20,7 +20,7 @@ async function Tokenauth(req, res, next) {
                 if (driver) {
                     //console.log("driver")
                     req.user = user
-                    next();
+                    sakthi();
                 }
             }
             else if (user.role === "user") {    
@@ -28,7 +28,7 @@ async function Tokenauth(req, res, next) {
                 if (users) {
                     //console.log("users")
                     req.user = user
-                    next();
+                    sakthi();
                 }
             }
             else {
