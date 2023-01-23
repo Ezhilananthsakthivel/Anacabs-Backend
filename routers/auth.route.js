@@ -65,7 +65,7 @@ router.post("/dlogin", async (req, res) => {
 router.post("/alogin", async (req, res) => {
     try {
         // Data Validation
-        const admin = await helper.validateLogin(req.body);
+        const admin = await helper.dvalidateLogin(req.body);
         // User Exists Validation
         const dbadmin = await helper.findAdminuname(admin.uname);
         if (!dbadmin)
