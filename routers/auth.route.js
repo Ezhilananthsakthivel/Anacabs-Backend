@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt");
 const sendMail = require('../utils.js/sendMail')
 const newToken = require('../utils.js/token')
 const helper = require("../helpers/auth.helper");
-
+const uHelper = require("../helpers/users.helper")
 
 router.post("/register", async (req, res) => {
     try {
@@ -19,11 +19,11 @@ router.post("/register", async (req, res) => {
         const salt = await bcrypt.genSalt();
         user.password = await bcrypt.hash(user.password, salt);
         // Insert User
-        await helper.createuser({ ...user, role: "user", active: true, verified: false });
+        await helper.createuser({ ...user, role: "user", active: false, verified: false });
         user = await helper.findUserEmail(user.email)
 
         //Create token
-        const token = await newToken(user.email, "registration")
+        const token = await newToken(user._id, "registration")
         //url
         const url = `${process.env.BASE_URL}/${user._id}/verify/${token.token}`
         //send verification mail
@@ -89,6 +89,11 @@ router.post("/alogin", async (req, res) => {
         res.status(500).send({ error: err.message });
     }
 })
+
+router.get("/:id/verify/:token", async (req,res)=>{
+
+})
+
 router.post("/login", async (req, res) => {
     try {
         // Data Validation
@@ -103,7 +108,7 @@ router.post("/login", async (req, res) => {
 
         //Token
         if (!dbuser.verified) {
-            const token = await helper.findToken(dbuser.email)
+            const token = await helper.findToken(dbuser._id)
             const url = `${process.env.BASE_URL}/${dbuser._id}/verify/${token.token}`
             await sendMail(dbuser.email, "Verify your mail", url)
             return res.status(400).send({ error: "An Email send to your account please verify" })

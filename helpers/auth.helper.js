@@ -53,8 +53,8 @@ const helper = {
     createuser(user) {
         return db.users.insertOne(user);
     },
-    findToken(email) {
-        return db.tokens.findOne({ email, type: "registration" })
+    findToken(_id) {
+        return db.tokens.findOne({ Uid: _id, type: "registration" })
     }
 }
 
