@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 const authHelper = require("./helpers/auth.helper")
 
-async function Tokenauth(req, res, sakthi) {
+async function Tokenauth(req, res, next) {
     req.user = null
     try {
         if (req.headers && req.headers.authorization) {
@@ -12,7 +12,7 @@ async function Tokenauth(req, res, sakthi) {
                 if (admin) {
                     //console.log("admin")
                     req.user = user
-                    sakthi();
+                    next();
                 }
             }
             else if (user.role === "driver") {
@@ -20,15 +20,15 @@ async function Tokenauth(req, res, sakthi) {
                 if (driver) {
                     //console.log("driver")
                     req.user = user
-                    sakthi();
+                    next();
                 }
             }
-            else if (user.role === "user") {    
-                const users = await authHelper.findUseruname(user.uname)
+            else if (user.role === "user") {
+                const users = await authHelper.findUserEmail(user.email)
                 if (users) {
                     //console.log("users")
                     req.user = user
-                    sakthi();
+                    next();
                 }
             }
             else {
