@@ -1,3 +1,4 @@
+const { ObjectId } = require("mongodb")
 const db = require("../mongodb")
 const Joi = require("joi")
 
@@ -48,13 +49,13 @@ const helper = {
         return db.admin.findOne({ uname, active: true });
     },
     findUserEmail(email) {
-        return db.users.findOne({ email, active: true });
+        return db.users.findOne({ email });
     },
     createuser(user) {
         return db.users.insertOne(user);
     },
     findToken(_id) {
-        return db.tokens.findOne({ Uid: _id, type: "registration" })
+        return db.tokens.findOne({ Uid: ObjectId(_id), type: "registration" })
     }
 }
 
