@@ -26,6 +26,7 @@ async function Tokenauth(req, res, next) {
             else if (user.role === "user") {
                 const users = await authHelper.findUserEmail(user.email)
                 if (users) {
+                    //console.log("users")
                     req.user = user
                     next();
                 }
