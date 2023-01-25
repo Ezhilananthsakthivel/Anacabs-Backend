@@ -19,7 +19,7 @@ router.post("/register", async (req, res) => {
         const salt = await bcrypt.genSalt();
         user.password = await bcrypt.hash(user.password, salt);
         // Insert User
-        await helper.createuser({ ...user, role: "user", active: false, verified: false });
+        await helper.createuser({ ...user, role: "user", verified: false });
         user = await helper.findUserEmail(user.email)
 
         //Create token
